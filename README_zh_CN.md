@@ -1,6 +1,6 @@
 # PluginHooker
 
-PluginHooker 是一个 Bukkit 插件，它能够为开发者提供一种便捷的方式来控制玩家的各种监听器。
+PluginHooker 是一个 Nukkit 插件，它能够为开发者提供一种便捷的方式来控制玩家的各种监听器。
 [Discord](https://discord.gg/fdmkfts)
 [QQ群](https://jq.qq.com/?_wv=1027&k=dhEQrZZW)
 
@@ -8,17 +8,14 @@ PluginHooker 是一个 Bukkit 插件，它能够为开发者提供一种便捷�
 
 ## 功能
 
-* Hook Bukkit 事件
-* Hook ProtocolLib 事件
-* Hook Netty pipeline (支持[PacketEvents](https://github.com/retrooper/packetevents))
+* Hook Nukkit 事件
+* Hook Netty pipeline
 * 为每个玩家独立控制监听器
 
 ## 已测试环境
 
-* Spigot: 1.8.8/1.19.4
+* Nukkit/PM1E/PNX: 1.19以上
 * Netty: 4.0/4.1
-* ProtocolLib: 4.8/5.0
-* PacketEvents: 1.0/2.0
 
 ## 用法
 
