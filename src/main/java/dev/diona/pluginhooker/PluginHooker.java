@@ -1,5 +1,6 @@
 package dev.diona.pluginhooker;
 
+import cn.nukkit.plugin.PluginBase;
 import dev.diona.pluginhooker.commands.SimpleCommand;
 import dev.diona.pluginhooker.config.ConfigManager;
 import dev.diona.pluginhooker.config.ConfigPath;
@@ -8,12 +9,15 @@ import dev.diona.pluginhooker.listeners.PlayerListener;
 import dev.diona.pluginhooker.player.PlayerManager;
 import dev.diona.pluginhooker.plugin.PluginManager;
 import lombok.Getter;
-import org.bstats.bukkit.Metrics;
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.java.JavaPlugin;
 
+/**
+ * 这是一个Nukkit的移植版本
+ *
+ * @author Loyisa(原作者)
+ * @author Catrainbow(基岩版维护)
+ */
 @Getter
-public final class PluginHooker extends JavaPlugin {
+public final class PluginHooker extends PluginBase {
 
     @Getter
     private static PluginHooker instance;
@@ -27,8 +31,7 @@ public final class PluginHooker extends JavaPlugin {
     @Getter
     private static ConfigManager configManager;
 
-    @ConfigPath("bstats")
-    public boolean enabledBstats;
+    public boolean enabledBstats = false;
 
     public PluginHooker() {
         instance = this;

@@ -6,7 +6,7 @@
 
     <groupId>dev.diona</groupId>
     <artifactId>PluginHooker</artifactId>
-    <version>1.2</version>
+    <version>Nukkit</version>
     <packaging>jar</packaging>
 
     <name>PluginHooker</name>
@@ -21,8 +21,24 @@
 
     <repositories>
         <repository>
-            <id>spigotmc-repo</id>
-            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
+            <id>opencollab-repo-release</id>
+            <url>https://repo.opencollab.dev/maven-releases/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>opencollab-repo-snapshot</id>
+            <url>https://repo.opencollab.dev/maven-snapshots/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
         </repository>
         <repository>
             <id>sonatype</id>
@@ -39,17 +55,11 @@
     </repositories>
 
     <dependencies>
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.24</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot</artifactId>
-            <version>1.8.8-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
 
@@ -79,11 +89,12 @@
         </dependency>
 
         <dependency>
-            <groupId>org.bstats</groupId>
-            <artifactId>bstats-bukkit</artifactId>
-            <version>3.0.0</version>
-            <scope>compile</scope>
+            <groupId>cn.nukkit</groupId>
+            <artifactId>nukkit</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
+
 
     </dependencies>
 
@@ -110,10 +121,6 @@
                         <relocation>
                             <pattern>bot.inker.acj</pattern>
                             <shadedPattern>dev.diona.pluginhooker.libs.bot.inker.acj</shadedPattern>
-                        </relocation>
-                        <relocation>
-                            <pattern>org.bstats</pattern>
-                            <shadedPattern>dev.diona.pluginhooker.libs.org.bstats</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>
