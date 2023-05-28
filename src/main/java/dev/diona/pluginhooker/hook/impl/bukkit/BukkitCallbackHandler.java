@@ -16,6 +16,7 @@ import cn.nukkit.event.inventory.EnchantItemEvent;
 import cn.nukkit.event.inventory.InventoryClickEvent;
 import cn.nukkit.event.player.*;
 import cn.nukkit.event.server.DataPacketReceiveEvent;
+import cn.nukkit.event.server.DataPacketSendEvent;
 import cn.nukkit.event.vehicle.VehicleDamageEvent;
 import cn.nukkit.event.vehicle.VehicleDestroyEvent;
 import cn.nukkit.plugin.Plugin;
@@ -144,28 +145,12 @@ public class BukkitCallbackHandler {
 
     private void initEventMap() {
         this.eventMap.put(BlockBreakEvent.class, event -> ((BlockBreakEvent) event).getPlayer());
-        //this.eventMap.put(BlockDamageEvent.class, event -> ((BlockDamageEvent) event).getPlayer());
         this.eventMap.put(BlockIgniteEvent.class, event -> (Player) ((BlockIgniteEvent) event).getEntity());
-        //this.eventMap.put(BlockMultiPlaceEvent.class, event -> ((BlockMultiPlaceEvent) event).getPlayer());
         this.eventMap.put(BlockPlaceEvent.class, event -> ((BlockPlaceEvent) event).getPlayer());
         this.eventMap.put(SignChangeEvent.class, event -> ((SignChangeEvent) event).getPlayer());
         this.eventMap.put(EnchantItemEvent.class, event -> ((EnchantItemEvent) event).getEnchanter());
         this.eventMap.put(InventoryClickEvent.class, event -> ((InventoryClickEvent) event).getPlayer());
         //TODO: 啥玩意基岩版api里没有,以后重写事件
-        /*
-        this.eventMap.put(InventoryDragEvent.class, event -> {
-            HumanEntity player = ((InventoryDragEvent) event).getWhoClicked();
-            return player instanceof Player ? (Player) player : null;
-        });
-        this.eventMap.put(InventoryInteractEvent.class, event -> {
-            HumanEntity player = ((InventoryInteractEvent) event).getWhoClicked();
-            return player instanceof Player ? (Player) player : null;
-        });
-        this.eventMap.put(InventoryOpenEvent.class, event -> {
-            HumanEntity player = ((InventoryOpenEvent) event).getPlayer();
-            return player instanceof Player ? (Player) player : null;
-        });
-         */
         this.eventMap.put(VehicleDamageEvent.class, event -> {
             Entity attacker = ((VehicleDamageEvent) event).getAttacker();
             return attacker instanceof Player ? (Player) attacker : null;
@@ -176,20 +161,19 @@ public class BukkitCallbackHandler {
         });
         this.eventMap.put(PlayerInteractEvent.class, event -> ((PlayerInteractEvent) event).getPlayer());
         this.eventMap.put(PlayerMoveEvent.class, event -> ((PlayerMoveEvent) event).getPlayer());
+        this.eventMap.put(PlayerTeleportEvent.class, event -> ((PlayerTeleportEvent) event).getPlayer());
+        this.eventMap.put(PlayerRespawnEvent.class, event -> ((PlayerRespawnEvent) event).getPlayer());
+        this.eventMap.put(PlayerItemHeldEvent.class, event -> ((PlayerItemHeldEvent) event).getPlayer());
+        this.eventMap.put(PlayerMouseOverEntityEvent.class, event -> ((PlayerMouseOverEntityEvent) event).getPlayer());
+        this.eventMap.put(PlayerToggleFlightEvent.class, event -> ((PlayerToggleFlightEvent) event).getPlayer());
+        this.eventMap.put(PlayerEatFoodEvent.class, event -> ((PlayerEatFoodEvent) event).getPlayer());
+        this.eventMap.put(PlayerChatEvent.class, event -> ((PlayerChatEvent) event).getPlayer());
+        this.eventMap.put(PlayerDropItemEvent.class, event -> ((PlayerDropItemEvent) event).getPlayer());
+        this.eventMap.put(PlayerInteractEntityEvent.class, event -> ((PlayerInteractEntityEvent) event).getPlayer());
+        this.eventMap.put(PlayerJumpEvent.class, event -> ((PlayerJumpEvent) event).getPlayer());
+        this.eventMap.put(PlayerGameModeChangeEvent.class, event -> ((PlayerGameModeChangeEvent) event).getPlayer());
+        this.eventMap.put(PlayerCommandPreprocessEvent.class, event -> ((PlayerCommandPreprocessEvent) event).getPlayer());
         this.eventMap.put(DataPacketReceiveEvent.class, event -> ((DataPacketReceiveEvent) event).getPlayer());
-        /*
-        this.eventMap.put(VehicleEnterEvent.class, event -> {
-            Entity enteredEntity = ((VehicleEnterEvent) event).getEntered();
-            return enteredEntity instanceof Player ? (Player) enteredEntity : null;
-        });
-        this.eventMap.put(VehicleEntityCollisionEvent.class, event -> {
-            Entity entity = ((VehicleEntityCollisionEvent) event).getEntity();
-            return entity instanceof Player ? (Player) entity : null;
-        });
-        this.eventMap.put(VehicleExitEvent.class, event -> {
-            Entity exitedEntity = ((VehicleExitEvent) event).getExited();
-            return exitedEntity instanceof Player ? (Player) exitedEntity : null;
-        });
-         */
+        this.eventMap.put(DataPacketSendEvent.class, event -> ((DataPacketSendEvent) event).getPlayer());
     }
 }

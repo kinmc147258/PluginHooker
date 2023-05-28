@@ -15,11 +15,11 @@ public class NMSUtils {
 
     private static final String BUKKIT_PACKAGE = Server.getInstance().getClass().getPackage().getName();
 
-    private static final Field playerConnectionField;
-    private static final Field networkManagerField;
-    private static final Field channelField;
-    private static final MethodHandle getHandleMethod;
-    private static final MethodHandle pipelineMethod;
+    private static Field playerConnectionField = null;
+    private static Field networkManagerField = null;
+    private static Field channelField = null;
+    private static MethodHandle getHandleMethod = null;
+    private static MethodHandle pipelineMethod = null;
 
     static {
         try {
@@ -35,8 +35,7 @@ public class NMSUtils {
             channelField = networkManagerField.getType()
                     .getField(majorVersion > 16 ? "k" : "channel");
             pipelineMethod = MethodHandles.lookup().unreflect(channelField.getType().getMethod("pipeline"));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (Exception ignore) {
         }
     }
 
