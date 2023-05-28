@@ -15,6 +15,7 @@ import cn.nukkit.event.entity.ProjectileLaunchEvent;
 import cn.nukkit.event.inventory.EnchantItemEvent;
 import cn.nukkit.event.inventory.InventoryClickEvent;
 import cn.nukkit.event.player.*;
+import cn.nukkit.event.server.DataPacketReceiveEvent;
 import cn.nukkit.event.vehicle.VehicleDamageEvent;
 import cn.nukkit.event.vehicle.VehicleDestroyEvent;
 import cn.nukkit.plugin.Plugin;
@@ -50,17 +51,12 @@ public class BukkitCallbackHandler {
 
     public boolean handleBukkitEvent(Plugin plugin, Event event) {
         // Don't handle those events
-        if (event instanceof PlayerPreLoginEvent
-                || event instanceof PlayerJoinEvent
-                || event instanceof PlayerQuitEvent
-                || event instanceof PlayerLoginEvent)
+        if (event instanceof PlayerPreLoginEvent || event instanceof PlayerJoinEvent || event instanceof PlayerQuitEvent || event instanceof PlayerLoginEvent)
             return false;
 
-        if (event.getClass().getClassLoader().equals(this.getClass().getClassLoader()))
-            return false;
+        if (event.getClass().getClassLoader().equals(this.getClass().getClassLoader())) return false;
 
-        if (!PluginHooker.getPluginManager().getPluginsToHook().contains(plugin))
-            return false;
+        if (!PluginHooker.getPluginManager().getPluginsToHook().contains(plugin)) return false;
 
         DionaPlayer dionaPlayer = PluginHooker.getPlayerManager().getDionaPlayer(this.getPlayerByEvent(event));
         if (dionaPlayer == null) {
@@ -95,8 +91,7 @@ public class BukkitCallbackHandler {
             if (damager instanceof EntityProjectile) {
                 EntityProjectile projectile = (EntityProjectile) damager;
                 Entity projectileSource = projectile.shootingEntity;
-                if (projectileSource instanceof Player)
-                    return (Player) projectileSource;
+                if (projectileSource instanceof Player) return (Player) projectileSource;
             }
         }
         if (event instanceof EntityEvent) {
@@ -179,6 +174,9 @@ public class BukkitCallbackHandler {
             Entity attacker = ((VehicleDestroyEvent) event).getAttacker();
             return attacker instanceof Player ? (Player) attacker : null;
         });
+        this.eventMap.put(PlayerInteractEvent.class, event -> ((PlayerInteractEvent) event).getPlayer());
+        this.eventMap.put(PlayerMoveEvent.class, event -> ((PlayerMoveEvent) event).getPlayer());
+        this.eventMap.put(DataPacketReceiveEvent.class, event -> ((DataPacketReceiveEvent) event).getPlayer());
         /*
         this.eventMap.put(VehicleEnterEvent.class, event -> {
             Entity enteredEntity = ((VehicleEnterEvent) event).getEntered();
