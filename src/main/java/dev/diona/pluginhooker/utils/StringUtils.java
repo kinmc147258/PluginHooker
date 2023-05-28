@@ -1,11 +1,11 @@
 package dev.diona.pluginhooker.utils;
 
-import org.bukkit.ChatColor;
+import cn.nukkit.utils.TextFormat;
 
 public class StringUtils {
 
     public static String colorize(String string) {
-        return ChatColor.translateAlternateColorCodes('&', string);
+        return TextFormat.colorize('&', string);
     }
 
 }

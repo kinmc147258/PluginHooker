@@ -1,11 +1,11 @@
 package dev.diona.pluginhooker.utils;
 
+import cn.nukkit.Player;
+import cn.nukkit.Server;
+import cn.nukkit.plugin.Plugin;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelPipeline;
 import io.netty.util.AttributeKey;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -23,7 +23,7 @@ public class HookerUtils {
     static {
 
         try {
-            pluginsField = Bukkit.getPluginManager().getClass().getDeclaredField("plugins");
+            pluginsField = Server.getInstance().getPluginManager().getClass().getDeclaredField("plugins");
             pluginsField.setAccessible(true);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -33,14 +33,14 @@ public class HookerUtils {
     @SuppressWarnings("unchecked")
     public static List<Plugin> getServerPlugins() {
         try {
-            return (List<Plugin>) pluginsField.get(Bukkit.getPluginManager());
+            return (List<Plugin>) pluginsField.get(Server.getInstance().getPluginManager());
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         }
     }
 
     public static Player getPlayerByChannelContext(Object ctx) {
-        for (Player player : Bukkit.getOnlinePlayers()) {
+        for (Player player : Server.getInstance().getOnlinePlayers().values()) {
             ChannelPipeline pipeline = NMSUtils.getPipelineByPlayer(player);
             for (String name : pipeline.names()) {
                 if (pipeline.context(name) != ctx) continue;

@@ -37,8 +37,7 @@ public class NettyVersion {
             try {
                 this.major = Integer.parseInt(split[0]);
                 this.minor = Integer.parseInt(split[1]);
-            } catch (Throwable var4) {
-                ProtocolLibrary.getPlugin().getLogger().warning("Could not detect netty version: '" + s + "'");
+            } catch (Throwable ignored) {
             }
 
         }

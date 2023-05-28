@@ -46,12 +46,10 @@ public final class PluginHooker extends PluginBase {
 
     @Override
     public void onEnable() {
-        if (enabledBstats) {
-            new Metrics(this, 17654);
-        }
-        // register command
-        Bukkit.getPluginCommand("pluginhooker").setExecutor(new SimpleCommand());
-        Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
+        //TODO: register command
+        //Bukkit.getPluginCommand("pluginhooker").setExecutor(new SimpleCommand());
+        //Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
+        this.getServer().getPluginManager().registerEvents(new PlayerListener(),this);
     }
 
     @Override

@@ -1,16 +1,18 @@
 package dev.diona.pluginhooker.listeners;
 
+import cn.nukkit.Player;
+import cn.nukkit.Server;
+import cn.nukkit.event.EventHandler;
+import cn.nukkit.event.EventPriority;
+import cn.nukkit.event.Listener;
+import cn.nukkit.event.player.PlayerJoinEvent;
+import cn.nukkit.event.player.PlayerQuitEvent;
+import cn.nukkit.scheduler.AsyncTask;
+import cn.nukkit.scheduler.Task;
 import dev.diona.pluginhooker.PluginHooker;
 import dev.diona.pluginhooker.utils.HookerUtils;
 import dev.diona.pluginhooker.utils.NMSUtils;
 import io.netty.channel.Channel;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -29,9 +31,12 @@ public class PlayerListener implements Listener {
         List<Consumer<Player>> list = channel.attr(HookerUtils.HANDLER_REPLACEMENT_FUNCTIONS).get();
         if (list == null) return;
 
-        Bukkit.getScheduler().runTaskLaterAsynchronously(PluginHooker.getInstance(), () -> {
-            list.forEach(consumer -> consumer.accept(player));
-        }, 10L);
+        Server.getInstance().getScheduler().scheduleAsyncTask(PluginHooker.getInstance(), new AsyncTask() {
+            @Override
+            public void onRun() {
+                list.forEach(consumer -> consumer.accept(player));
+            }
+        });
         PluginHooker.getPlayerManager().getDionaPlayer(player).setInitialized();
     }
 

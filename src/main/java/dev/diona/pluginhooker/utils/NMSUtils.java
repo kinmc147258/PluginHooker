@@ -1,9 +1,9 @@
 package dev.diona.pluginhooker.utils;
 
+import cn.nukkit.Player;
+import cn.nukkit.Server;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelPipeline;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
@@ -13,7 +13,7 @@ import java.lang.reflect.Method;
 
 public class NMSUtils {
 
-    private static final String BUKKIT_PACKAGE = Bukkit.getServer().getClass().getPackage().getName();
+    private static final String BUKKIT_PACKAGE = Server.getInstance().getClass().getPackage().getName();
 
     private static final Field playerConnectionField;
     private static final Field networkManagerField;
