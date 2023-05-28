@@ -1,5 +1,6 @@
 package dev.diona.pluginhooker.hook.impl.protocollib;
 
+import cn.nukkit.plugin.Plugin;
 import com.comphenix.protocol.concurrency.SortedCopyOnWriteArray;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.events.PacketListener;
@@ -9,8 +10,6 @@ import dev.diona.pluginhooker.PluginHooker;
 import dev.diona.pluginhooker.config.ConfigPath;
 import dev.diona.pluginhooker.events.ProtocolLibPacketEvent;
 import dev.diona.pluginhooker.player.DionaPlayer;
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.Plugin;
 
 import java.lang.reflect.Field;
 import java.util.Collection;

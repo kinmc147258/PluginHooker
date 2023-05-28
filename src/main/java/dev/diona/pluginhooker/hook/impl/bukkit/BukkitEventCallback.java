@@ -1,8 +1,8 @@
 package dev.diona.pluginhooker.hook.impl.bukkit;
 
+import cn.nukkit.event.Event;
+import cn.nukkit.plugin.Plugin;
 import lombok.Getter;
-import org.bukkit.event.Event;
-import org.bukkit.plugin.Plugin;
 
 import java.util.function.BiPredicate;
 

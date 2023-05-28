@@ -1,5 +1,8 @@
 package dev.diona.pluginhooker.hook.impl.netty.channelhandler;
 
+import cn.nukkit.Player;
+import cn.nukkit.Server;
+import cn.nukkit.plugin.Plugin;
 import dev.diona.pluginhooker.PluginHooker;
 import dev.diona.pluginhooker.config.ConfigPath;
 import dev.diona.pluginhooker.events.NettyCodecEvent;
@@ -7,9 +10,6 @@ import dev.diona.pluginhooker.player.DionaPlayer;
 import io.netty.channel.ChannelDuplexHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPromise;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 
 public class DuplexHandlerWrapper extends ChannelDuplexHandler {
 
@@ -39,7 +39,7 @@ public class DuplexHandlerWrapper extends ChannelDuplexHandler {
                 return;
             }
             NettyCodecEvent nettyCodecEvent = new NettyCodecEvent(plugin, dionaPlayer, packet, false);
-            Bukkit.getPluginManager().callEvent(nettyCodecEvent);
+            Server.getInstance().getPluginManager().callEvent(nettyCodecEvent);
             if (nettyCodecEvent.isCancelled()) {
                 super.channelRead(channelHandlerContext, packet);
             } else {
@@ -58,7 +58,7 @@ public class DuplexHandlerWrapper extends ChannelDuplexHandler {
                 return;
             }
             NettyCodecEvent nettyCodecEvent = new NettyCodecEvent(plugin, dionaPlayer, packet, true);
-            Bukkit.getPluginManager().callEvent(nettyCodecEvent);
+            Server.getInstance().getPluginManager().callEvent(nettyCodecEvent);
             if (nettyCodecEvent.isCancelled()) {
                 super.write(channelHandlerContext, packet, channelPromise);
             } else {

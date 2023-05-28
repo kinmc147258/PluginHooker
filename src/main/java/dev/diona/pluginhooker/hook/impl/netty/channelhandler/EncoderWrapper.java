@@ -1,5 +1,8 @@
 package dev.diona.pluginhooker.hook.impl.netty.channelhandler;
 
+import cn.nukkit.Player;
+import cn.nukkit.Server;
+import cn.nukkit.plugin.Plugin;
 import dev.diona.pluginhooker.PluginHooker;
 import dev.diona.pluginhooker.config.ConfigPath;
 import dev.diona.pluginhooker.events.NettyCodecEvent;
@@ -8,9 +11,6 @@ import dev.diona.pluginhooker.utils.HookerUtils;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPromise;
 import io.netty.handler.codec.MessageToMessageEncoder;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 
 import java.lang.invoke.MethodHandle;
 import java.lang.invoke.MethodHandles;
@@ -56,7 +56,7 @@ public class EncoderWrapper extends MessageToMessageEncoder<Object> {
                 return;
             }
             NettyCodecEvent nettyCodecEvent = new NettyCodecEvent(plugin, dionaPlayer, data, true);
-            Bukkit.getPluginManager().callEvent(nettyCodecEvent);
+            Server.getInstance().getPluginManager().callEvent(nettyCodecEvent);
             if (nettyCodecEvent.isCancelled()) {
                 super.write(ctx, data, promise);
             } else {

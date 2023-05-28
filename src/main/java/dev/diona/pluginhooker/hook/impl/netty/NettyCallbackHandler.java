@@ -1,5 +1,7 @@
 package dev.diona.pluginhooker.hook.impl.netty;
 
+import cn.nukkit.Player;
+import cn.nukkit.plugin.Plugin;
 import com.google.common.collect.Lists;
 import dev.diona.pluginhooker.PluginHooker;
 import dev.diona.pluginhooker.hook.impl.netty.channelhandler.DecoderWrapper;
@@ -13,8 +15,6 @@ import io.netty.channel.ChannelDuplexHandler;
 import io.netty.channel.ChannelHandler;
 import io.netty.handler.codec.MessageToMessageDecoder;
 import io.netty.handler.codec.MessageToMessageEncoder;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

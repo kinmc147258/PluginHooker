@@ -1,5 +1,8 @@
 package dev.diona.pluginhooker.hook.impl.bukkit;
 
+import cn.nukkit.Server;
+import cn.nukkit.event.Event;
+import cn.nukkit.plugin.Plugin;
 import dev.diona.pluginhooker.config.ConfigPath;
 import dev.diona.pluginhooker.hook.Injector;
 import dev.diona.pluginhooker.utils.ClassUtils;
@@ -9,9 +12,6 @@ import javassist.CtMethod;
 import javassist.NotFoundException;
 import javassist.util.proxy.DefineClassHelper;
 import lombok.Getter;
-import org.bukkit.Bukkit;
-import org.bukkit.event.Event;
-import org.bukkit.plugin.Plugin;
 
 import java.util.function.BiPredicate;
 
@@ -27,7 +27,7 @@ public class BukkitEventInjector extends Injector {
             CALLBACK_CLASS = classPool.get(BukkitEventCallback.class.getName());
             CALLBACK_CLASS.replaceClassName(
                     BukkitEventCallback.class.getName(),
-                    Bukkit.class.getPackage().getName() + "." + BukkitEventCallback.class.getSimpleName()
+                    Server.getInstance().getClass().getPackage().getName() + "." + BukkitEventCallback.class.getSimpleName()
             );
         } catch (NotFoundException e) {
             throw new RuntimeException(e);
@@ -44,8 +44,8 @@ public class BukkitEventInjector extends Injector {
             Class<?> bukkitEventHooker =
                     DefineClassHelper.toClass(
                             CALLBACK_CLASS.getName(),
-                            Bukkit.class,
-                            Bukkit.class.getClassLoader(),
+                            Server.class,
+                            Server.class.getClassLoader(),
                             null,
                             CALLBACK_CLASS.toBytecode()
                     );
@@ -60,6 +60,7 @@ public class BukkitEventInjector extends Injector {
     @Override
     public void hookClass() throws CannotCompileException {
         CtMethod callEvent = ClassUtils.getMethodByName(targetClass.getMethods(), "callEvent");
+        assert callEvent != null;
         callEvent.insertBefore(
                 "if(" + CALLBACK_CLASS.getName() + ".getInstance().onCallEvent(this.plugin,$1))return;"
         );
