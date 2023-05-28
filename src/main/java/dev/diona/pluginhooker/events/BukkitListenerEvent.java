@@ -31,7 +31,7 @@ public class BukkitListenerEvent extends Event implements Cancellable {
         this.dionaPlayer = dionaPlayer;
     }
 
-    public HandlerList getHandlers() {
+    public static HandlerList getHandlers() {
         return handlers;
     }
 
