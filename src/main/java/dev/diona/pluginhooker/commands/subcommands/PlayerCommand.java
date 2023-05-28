@@ -1,14 +1,15 @@
 package dev.diona.pluginhooker.commands.subcommands;
 
+import cn.nukkit.Server;
+import cn.nukkit.command.CommandSender;
+import cn.nukkit.plugin.Plugin;
 import com.google.common.collect.Lists;
 import dev.diona.pluginhooker.PluginHooker;
 import dev.diona.pluginhooker.commands.SubCommand;
 import dev.diona.pluginhooker.player.DionaPlayer;
 import dev.diona.pluginhooker.utils.StringUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.command.CommandSender;
-import org.bukkit.plugin.Plugin;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,7 +28,7 @@ public class PlayerCommand extends SubCommand {
             return false;
         }
         // get Player
-        DionaPlayer dionaPlayer = PluginHooker.getPlayerManager().getDionaPlayer(Bukkit.getPlayerExact(args[0]));
+        DionaPlayer dionaPlayer = PluginHooker.getPlayerManager().getDionaPlayer(PluginHooker.getInstance().getServer().getPlayer(args[0]));
         if (dionaPlayer == null) {
             sender.sendMessage(StringUtils.colorize(PREFIX + "Player " + args[0] + " not found"));
             return false;
@@ -38,7 +39,7 @@ public class PlayerCommand extends SubCommand {
                 return false;
             }
             // get Plugin
-            Plugin plugin = Bukkit.getPluginManager().getPlugin(args[2]);
+            Plugin plugin = Server.getInstance().getPluginManager().getPlugin(args[2]);
             if (plugin == null) {
                 sender.sendMessage(StringUtils.colorize(PREFIX + "Plugin " + args[2] + " not found"));
                 return false;
@@ -61,7 +62,7 @@ public class PlayerCommand extends SubCommand {
                 return false;
             }
             // get Plugin
-            Plugin plugin = Bukkit.getPluginManager().getPlugin(args[2]);
+            Plugin plugin = Server.getInstance().getPluginManager().getPlugin(args[2]);
             if (plugin == null) {
                 sender.sendMessage(StringUtils.colorize(PREFIX + "Plugin " + args[2] + " not found"));
                 return false;
@@ -94,21 +95,17 @@ public class PlayerCommand extends SubCommand {
             if (args[1].isEmpty()) {
                 return sub;
             } else {
-                return sub.stream()
-                        .filter(name -> name.toLowerCase().startsWith(args[0].toLowerCase()))
-                        .collect(Collectors.toList());
+                return sub.stream().filter(name -> name.toLowerCase().startsWith(args[0].toLowerCase())).collect(Collectors.toList());
             }
         } else if (args.length == 3) {
             if (args[1].equalsIgnoreCase("add") || args[1].equalsIgnoreCase("remove")) {
-                List<String> plugins = Arrays.stream(Bukkit.getPluginManager().getPlugins())
-                        .map(Plugin::getName)
-                        .collect(Collectors.toList());
+                List<String> plugins = new ArrayList<>();
+                for (Plugin plugin : PluginHooker.getInstance().getServer().getPluginManager().getPlugins().values())
+                    plugins.add(plugin.getName());
                 if (args[2].isEmpty()) {
                     return plugins;
                 } else {
-                    return plugins.stream()
-                            .filter(name -> name.toLowerCase().startsWith(args[2].toLowerCase()))
-                            .collect(Collectors.toList());
+                    return plugins.stream().filter(name -> name.toLowerCase().startsWith(args[2].toLowerCase())).collect(Collectors.toList());
                 }
             }
         }

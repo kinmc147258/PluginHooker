@@ -1,8 +1,8 @@
 package dev.diona.pluginhooker.commands;
 
+import cn.nukkit.command.CommandSender;
 import dev.diona.pluginhooker.utils.StringUtils;
 import lombok.Getter;
-import org.bukkit.command.CommandSender;
 
 import java.util.List;
 
