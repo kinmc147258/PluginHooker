@@ -1,12 +1,12 @@
 package dev.diona.pluginhooker.player;
 
+import cn.nukkit.Player;
+import cn.nukkit.Server;
+import cn.nukkit.plugin.Plugin;
 import com.comphenix.protocol.injector.SortedPacketListenerList;
 import dev.diona.pluginhooker.PluginHooker;
 import lombok.Getter;
 import lombok.Setter;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -35,7 +35,7 @@ public class DionaPlayer {
 
     public void enablePlugin(Plugin plugin) {
         if (!PluginHooker.getPluginManager().getPluginsToHook().contains(plugin)) {
-            Bukkit.getLogger().warning("Warning: " + plugin.getName() + " is not in the plugin hook list! Ignored!");
+            Server.getInstance().getLogger().warning("Warning: " + plugin.getName() + " is not in the plugin hook list! Ignored!");
             return;
         }
         enabledPlugins.add(plugin);

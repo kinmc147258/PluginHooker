@@ -1,10 +1,10 @@
 package dev.diona.pluginhooker.plugin;
 
+import cn.nukkit.Server;
+import cn.nukkit.plugin.Plugin;
 import dev.diona.pluginhooker.player.DionaPlayer;
 import dev.diona.pluginhooker.PluginHooker;
 import lombok.Getter;
-import org.bukkit.Bukkit;
-import org.bukkit.plugin.Plugin;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
@@ -20,7 +20,7 @@ public class PluginManager {
 
     public void removePlugin(Plugin plugin) {
         if (!pluginsToHook.contains(plugin)) {
-            Bukkit.getLogger().warning("Warning: " + plugin.getName() + " is not in the plugin hook list! Ignored!");
+            Server.getInstance().getLogger().warning("Warning: " + plugin.getName() + " is not in the plugin hook list! Ignored!");
             return;
         }
         pluginsToHook.remove(plugin);

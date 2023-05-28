@@ -1,26 +1,27 @@
 package dev.diona.pluginhooker.hook.impl.bukkit;
 
+import cn.nukkit.Player;
+import cn.nukkit.Server;
+import cn.nukkit.entity.projectile.EntityProjectile;
+import cn.nukkit.event.Event;
+import cn.nukkit.entity.*;
+import cn.nukkit.event.block.BlockBreakEvent;
+import cn.nukkit.event.block.BlockIgniteEvent;
+import cn.nukkit.event.block.BlockPlaceEvent;
+import cn.nukkit.event.block.SignChangeEvent;
+import cn.nukkit.event.entity.EntityDamageByEntityEvent;
+import cn.nukkit.event.entity.EntityEvent;
+import cn.nukkit.event.entity.ProjectileLaunchEvent;
+import cn.nukkit.event.inventory.EnchantItemEvent;
+import cn.nukkit.event.inventory.InventoryClickEvent;
+import cn.nukkit.event.player.*;
+import cn.nukkit.event.vehicle.VehicleDamageEvent;
+import cn.nukkit.event.vehicle.VehicleDestroyEvent;
+import cn.nukkit.plugin.Plugin;
 import dev.diona.pluginhooker.PluginHooker;
 import dev.diona.pluginhooker.config.ConfigPath;
 import dev.diona.pluginhooker.events.BukkitListenerEvent;
 import dev.diona.pluginhooker.player.DionaPlayer;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.HumanEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
-import org.bukkit.event.Event;
-import org.bukkit.event.block.*;
-import org.bukkit.event.enchantment.EnchantItemEvent;
-import org.bukkit.event.enchantment.PrepareItemEnchantEvent;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityEvent;
-import org.bukkit.event.entity.ProjectileLaunchEvent;
-import org.bukkit.event.inventory.*;
-import org.bukkit.event.player.*;
-import org.bukkit.event.vehicle.*;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.projectiles.ProjectileSource;
 
 import java.lang.reflect.Field;
 import java.util.HashSet;
@@ -49,8 +50,7 @@ public class BukkitCallbackHandler {
 
     public boolean handleBukkitEvent(Plugin plugin, Event event) {
         // Don't handle those events
-        if (event instanceof AsyncPlayerPreLoginEvent
-                || event instanceof PlayerPreLoginEvent
+        if (event instanceof PlayerPreLoginEvent
                 || event instanceof PlayerJoinEvent
                 || event instanceof PlayerQuitEvent
                 || event instanceof PlayerLoginEvent)
@@ -68,7 +68,7 @@ public class BukkitCallbackHandler {
                 return false;
             }
             BukkitListenerEvent bukkitListenerEvent = new BukkitListenerEvent(plugin, event);
-            Bukkit.getPluginManager().callEvent(bukkitListenerEvent);
+            Server.getInstance().getPluginManager().callEvent(bukkitListenerEvent);
             return bukkitListenerEvent.isCancelled();
         } else {
             if (dionaPlayer.getEnabledPlugins().contains(plugin)) {
@@ -76,7 +76,7 @@ public class BukkitCallbackHandler {
                     return false;
                 }
                 BukkitListenerEvent bukkitListenerEvent = new BukkitListenerEvent(plugin, event, dionaPlayer);
-                Bukkit.getPluginManager().callEvent(bukkitListenerEvent);
+                Server.getInstance().getPluginManager().callEvent(bukkitListenerEvent);
                 return bukkitListenerEvent.isCancelled();
             } else {
                 return true;
@@ -92,9 +92,9 @@ public class BukkitCallbackHandler {
             if (damager instanceof Player) {
                 return (Player) damager;
             }
-            if (damager instanceof Projectile) {
-                Projectile projectile = (Projectile) damager;
-                ProjectileSource projectileSource = projectile.getShooter();
+            if (damager instanceof EntityProjectile) {
+                EntityProjectile projectile = (EntityProjectile) damager;
+                Entity projectileSource = projectile.shootingEntity;
                 if (projectileSource instanceof Player)
                     return (Player) projectileSource;
             }
@@ -105,7 +105,7 @@ public class BukkitCallbackHandler {
                 return (Player) entity;
             }
             if (event instanceof ProjectileLaunchEvent) {
-                ProjectileSource shooter = ((ProjectileLaunchEvent) event).getEntity().getShooter();
+                Entity shooter = ((ProjectileLaunchEvent) event).getEntity().shootingEntity;
                 return shooter instanceof Player ? (Player) shooter : null;
             }
         }
@@ -149,22 +149,15 @@ public class BukkitCallbackHandler {
 
     private void initEventMap() {
         this.eventMap.put(BlockBreakEvent.class, event -> ((BlockBreakEvent) event).getPlayer());
-        this.eventMap.put(BlockDamageEvent.class, event -> ((BlockDamageEvent) event).getPlayer());
-        this.eventMap.put(BlockIgniteEvent.class, event -> ((BlockIgniteEvent) event).getPlayer());
-        this.eventMap.put(BlockMultiPlaceEvent.class, event -> ((BlockMultiPlaceEvent) event).getPlayer());
+        //this.eventMap.put(BlockDamageEvent.class, event -> ((BlockDamageEvent) event).getPlayer());
+        this.eventMap.put(BlockIgniteEvent.class, event -> (Player) ((BlockIgniteEvent) event).getEntity());
+        //this.eventMap.put(BlockMultiPlaceEvent.class, event -> ((BlockMultiPlaceEvent) event).getPlayer());
         this.eventMap.put(BlockPlaceEvent.class, event -> ((BlockPlaceEvent) event).getPlayer());
         this.eventMap.put(SignChangeEvent.class, event -> ((SignChangeEvent) event).getPlayer());
         this.eventMap.put(EnchantItemEvent.class, event -> ((EnchantItemEvent) event).getEnchanter());
-        this.eventMap.put(PrepareItemEnchantEvent.class, event -> ((PrepareItemEnchantEvent) event).getEnchanter());
-        this.eventMap.put(FurnaceExtractEvent.class, event -> ((FurnaceExtractEvent) event).getPlayer());
-        this.eventMap.put(InventoryClickEvent.class, event -> {
-            HumanEntity player = ((InventoryClickEvent) event).getWhoClicked();
-            return player instanceof Player ? (Player) player : null;
-        });
-        this.eventMap.put(InventoryCloseEvent.class, event -> {
-            HumanEntity player = ((InventoryCloseEvent) event).getPlayer();
-            return player instanceof Player ? (Player) player : null;
-        });
+        this.eventMap.put(InventoryClickEvent.class, event -> ((InventoryClickEvent) event).getPlayer());
+        //TODO: 啥玩意基岩版api里没有,以后重写事件
+        /*
         this.eventMap.put(InventoryDragEvent.class, event -> {
             HumanEntity player = ((InventoryDragEvent) event).getWhoClicked();
             return player instanceof Player ? (Player) player : null;
@@ -177,6 +170,7 @@ public class BukkitCallbackHandler {
             HumanEntity player = ((InventoryOpenEvent) event).getPlayer();
             return player instanceof Player ? (Player) player : null;
         });
+         */
         this.eventMap.put(VehicleDamageEvent.class, event -> {
             Entity attacker = ((VehicleDamageEvent) event).getAttacker();
             return attacker instanceof Player ? (Player) attacker : null;
@@ -185,6 +179,7 @@ public class BukkitCallbackHandler {
             Entity attacker = ((VehicleDestroyEvent) event).getAttacker();
             return attacker instanceof Player ? (Player) attacker : null;
         });
+        /*
         this.eventMap.put(VehicleEnterEvent.class, event -> {
             Entity enteredEntity = ((VehicleEnterEvent) event).getEntered();
             return enteredEntity instanceof Player ? (Player) enteredEntity : null;
@@ -197,5 +192,6 @@ public class BukkitCallbackHandler {
             Entity exitedEntity = ((VehicleExitEvent) event).getExited();
             return exitedEntity instanceof Player ? (Player) exitedEntity : null;
         });
+         */
     }
 }

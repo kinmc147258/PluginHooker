@@ -1,8 +1,7 @@
 package dev.diona.pluginhooker.player;
 
+import cn.nukkit.Player;
 import lombok.Getter;
-import org.bukkit.entity.Player;
-
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
