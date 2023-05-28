@@ -1,14 +1,14 @@
 package dev.diona.pluginhooker.config;
 
+import cn.nukkit.utils.Config;
 import dev.diona.pluginhooker.PluginHooker;
-import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.lang.reflect.Field;
 
 public class ConfigManager {
 
-    private final YamlConfiguration config = new YamlConfiguration();
+    private Config config = new Config(PluginHooker.getInstance().getDataFolder() + "/config.yml", 2);
 
     public ConfigManager() {
         try {
@@ -16,8 +16,8 @@ public class ConfigManager {
             if (!configFile.exists()) {
                 PluginHooker.getInstance().saveResource("config.yml", false);
             }
-
-            config.load(configFile);
+            config = new Config(configFile);
+            config.save(true);
         } catch (Exception e) {
             e.printStackTrace();
         }

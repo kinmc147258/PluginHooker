@@ -1,11 +1,11 @@
 package dev.diona.pluginhooker.events;
 
+import cn.nukkit.event.Cancellable;
+import cn.nukkit.event.Event;
+import cn.nukkit.event.HandlerList;
+import cn.nukkit.plugin.Plugin;
 import dev.diona.pluginhooker.player.DionaPlayer;
 import lombok.Getter;
-import org.bukkit.event.Cancellable;
-import org.bukkit.event.Event;
-import org.bukkit.event.HandlerList;
-import org.bukkit.plugin.Plugin;
 
 public class BukkitListenerEvent extends Event implements Cancellable {
 
@@ -25,13 +25,12 @@ public class BukkitListenerEvent extends Event implements Cancellable {
     }
 
     public BukkitListenerEvent(Plugin plugin, Event event, DionaPlayer dionaPlayer) {
-        super(event.isAsynchronous());
+        super();
         this.plugin = plugin;
         this.event = event;
         this.dionaPlayer = dionaPlayer;
     }
 
-    @Override
     public HandlerList getHandlers() {
         return handlers;
     }

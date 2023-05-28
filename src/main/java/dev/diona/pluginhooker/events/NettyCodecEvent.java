@@ -1,11 +1,11 @@
 package dev.diona.pluginhooker.events;
 
+import cn.nukkit.event.Cancellable;
+import cn.nukkit.event.Event;
+import cn.nukkit.event.HandlerList;
+import cn.nukkit.plugin.Plugin;
 import dev.diona.pluginhooker.player.DionaPlayer;
 import lombok.Getter;
-import org.bukkit.event.Cancellable;
-import org.bukkit.event.Event;
-import org.bukkit.event.HandlerList;
-import org.bukkit.plugin.Plugin;
 
 public class NettyCodecEvent extends Event implements Cancellable {
 
@@ -28,7 +28,6 @@ public class NettyCodecEvent extends Event implements Cancellable {
         this.outbound = outbound;
     }
 
-    @Override
     public HandlerList getHandlers() {
         return handlers;
     }
@@ -47,7 +46,4 @@ public class NettyCodecEvent extends Event implements Cancellable {
         this.cancel = cancel;
     }
 
-    enum Type {
-        DEFAULT, PACKET_EVENTS
-    }
 }

@@ -1,6 +1,7 @@
 package dev.diona.pluginhooker.hook;
 
 import bot.inker.acj.JvmHacker;
+import cn.nukkit.plugin.PluginLogger;
 import dev.diona.pluginhooker.PluginHooker;
 import org.reflections.Reflections;
 
@@ -11,7 +12,7 @@ import java.util.stream.Collectors;
 
 public class HookerManager {
 
-    private final Logger logger = PluginHooker.getInstance().getLogger();
+    private final PluginLogger logger = PluginHooker.getInstance().getLogger();
 
     public HookerManager() {
         List<Injector> injectors = this.getInjectorList();
@@ -40,12 +41,12 @@ public class HookerManager {
                     injector.redefineClass(instrumentation);
                     logger.info(injector.getClassNameWithoutPackage() + " is now redefined!");
                 } catch (Exception e) {
-                    logger.severe("Error while redefining " + injector.getClassNameWithoutPackage());
+                    logger.error("Error while redefining " + injector.getClassNameWithoutPackage());
                     e.printStackTrace();
                 }
             });
         } catch (Exception e) {
-            logger.severe("Error while attaching agent");
+            logger.error("Error while attaching agent");
             e.printStackTrace();
         }
     }
