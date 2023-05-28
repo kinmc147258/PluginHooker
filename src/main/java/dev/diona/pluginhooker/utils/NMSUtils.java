@@ -2,6 +2,7 @@ package dev.diona.pluginhooker.utils;
 
 import cn.nukkit.Player;
 import cn.nukkit.Server;
+import cn.nukkit.network.Network;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelPipeline;
 

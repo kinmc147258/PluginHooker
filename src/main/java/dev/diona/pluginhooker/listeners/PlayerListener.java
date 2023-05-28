@@ -8,7 +8,6 @@ import cn.nukkit.event.Listener;
 import cn.nukkit.event.player.PlayerJoinEvent;
 import cn.nukkit.event.player.PlayerQuitEvent;
 import cn.nukkit.scheduler.AsyncTask;
-import cn.nukkit.scheduler.Task;
 import dev.diona.pluginhooker.PluginHooker;
 import dev.diona.pluginhooker.utils.HookerUtils;
 import dev.diona.pluginhooker.utils.NMSUtils;
@@ -27,16 +26,21 @@ public class PlayerListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void postPlayerJoin(PlayerJoinEvent e) {
         Player player = e.getPlayer();
-        Channel channel = NMSUtils.getChannelByPlayer(player);
-        List<Consumer<Player>> list = channel.attr(HookerUtils.HANDLER_REPLACEMENT_FUNCTIONS).get();
-        if (list == null) return;
+        try {
+            Channel channel = NMSUtils.getChannelByPlayer(player);
+            List<Consumer<Player>> list = channel.attr(HookerUtils.HANDLER_REPLACEMENT_FUNCTIONS).get();
+            if (list == null) return;
 
-        Server.getInstance().getScheduler().scheduleAsyncTask(PluginHooker.getInstance(), new AsyncTask() {
-            @Override
-            public void onRun() {
-                list.forEach(consumer -> consumer.accept(player));
-            }
-        });
+            Server.getInstance().getScheduler().scheduleAsyncTask(PluginHooker.getInstance(), new AsyncTask() {
+                @Override
+                public void onRun() {
+                    list.forEach(consumer -> consumer.accept(player));
+                }
+            });
+        } catch (Exception ignore) {
+
+        }
+        //TODO: Nukkit自己写了一套基于UDP的发包协议，还没想好如何兼容
         PluginHooker.getPlayerManager().getDionaPlayer(player).setInitialized();
     }
 

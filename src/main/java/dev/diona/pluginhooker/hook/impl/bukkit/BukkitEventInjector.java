@@ -38,7 +38,7 @@ public class BukkitEventInjector extends Injector {
     private final BukkitCallbackHandler callbackHandler = new BukkitCallbackHandler();
 
     public BukkitEventInjector() {
-        super("org.bukkit.plugin.RegisteredListener", "org.bukkit.plugin.Plugin");
+        super("cn.nukkit.plugin.RegisteredListener", "cn.nukkit.plugin.Plugin");
 
         try {
             Class<?> bukkitEventHooker =
