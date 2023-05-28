@@ -1,13 +1,14 @@
 package dev.diona.pluginhooker.commands.subcommands;
 
+import cn.nukkit.Server;
+import cn.nukkit.command.CommandSender;
+import cn.nukkit.plugin.Plugin;
 import com.google.common.collect.Lists;
 import dev.diona.pluginhooker.PluginHooker;
 import dev.diona.pluginhooker.commands.SubCommand;
 import dev.diona.pluginhooker.utils.StringUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.command.CommandSender;
-import org.bukkit.plugin.Plugin;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,7 +31,7 @@ public class PluginCommand extends SubCommand {
                 sender.sendMessage(StringUtils.colorize(PREFIX + "Usage: /ph plugin add <plugin name>"));
                 return false;
             }
-            Plugin plugin = Bukkit.getPluginManager().getPlugin(args[1]);
+            Plugin plugin = Server.getInstance().getPluginManager().getPlugin(args[1]);
             if (plugin == null) {
                 sender.sendMessage(StringUtils.colorize(PREFIX + "Plugin " + args[1] + " not found"));
                 return false;
@@ -52,7 +53,7 @@ public class PluginCommand extends SubCommand {
                 sender.sendMessage(StringUtils.colorize(PREFIX + "Usage: /ph plugin remove <plugin name>"));
                 return false;
             }
-            Plugin plugin = Bukkit.getPluginManager().getPlugin(args[1]);
+            Plugin plugin = Server.getInstance().getPluginManager().getPlugin(args[1]);
             if (plugin == null) {
                 sender.sendMessage(StringUtils.colorize(PREFIX + "Plugin " + args[1] + " not found"));
                 return false;
@@ -93,14 +94,15 @@ public class PluginCommand extends SubCommand {
             }
         } else if (args.length == 2 && args[0].equalsIgnoreCase("add") || args[0].equalsIgnoreCase("remove")) {
             if (args[1].isEmpty()) {
-                return Arrays.stream(Bukkit.getPluginManager().getPlugins())
-                        .map(Plugin::getName)
-                        .collect(Collectors.toList());
+                List<String> plugins = new ArrayList<>();
+                for (Plugin plugin : PluginHooker.getInstance().getServer().getPluginManager().getPlugins().values())
+                    plugins.add(plugin.getName());
+                return plugins;
             } else {
-                return Arrays.stream(Bukkit.getPluginManager().getPlugins())
-                        .map(Plugin::getName)
-                        .filter(name -> name.toLowerCase().startsWith(args[1].toLowerCase()))
-                        .collect(Collectors.toList());
+                List<String> plugins = new ArrayList<>();
+                for (Plugin plugin : PluginHooker.getInstance().getServer().getPluginManager().getPlugins().values())
+                    plugins.add(plugin.getName().toLowerCase());
+                return plugins;
             }
         }
         return null;

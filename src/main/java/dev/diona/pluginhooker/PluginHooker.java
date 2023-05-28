@@ -3,7 +3,6 @@ package dev.diona.pluginhooker;
 import cn.nukkit.plugin.PluginBase;
 import dev.diona.pluginhooker.commands.SimpleCommand;
 import dev.diona.pluginhooker.config.ConfigManager;
-import dev.diona.pluginhooker.config.ConfigPath;
 import dev.diona.pluginhooker.hook.HookerManager;
 import dev.diona.pluginhooker.listeners.PlayerListener;
 import dev.diona.pluginhooker.player.PlayerManager;
@@ -31,8 +30,6 @@ public final class PluginHooker extends PluginBase {
     @Getter
     private static ConfigManager configManager;
 
-    public boolean enabledBstats = false;
-
     public PluginHooker() {
         instance = this;
 
@@ -46,10 +43,8 @@ public final class PluginHooker extends PluginBase {
 
     @Override
     public void onEnable() {
-        //TODO: register command
-        //Bukkit.getPluginCommand("pluginhooker").setExecutor(new SimpleCommand());
-        //Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
-        this.getServer().getPluginManager().registerEvents(new PlayerListener(),this);
+        this.getServer().getCommandMap().register("PluginHooker", new SimpleCommand());
+        this.getServer().getPluginManager().registerEvents(new PlayerListener(), this);
     }
 
     @Override
