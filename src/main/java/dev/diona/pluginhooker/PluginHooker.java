@@ -36,6 +36,7 @@ public final class PluginHooker extends PluginBase {
 
     @Override
     public void onEnable() {
+        this.saveResource("config.yml");
         configManager = new ConfigManager();
         pluginManager = new PluginManager();
         playerManager = new PlayerManager();

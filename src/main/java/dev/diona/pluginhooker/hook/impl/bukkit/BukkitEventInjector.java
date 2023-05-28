@@ -3,6 +3,7 @@ package dev.diona.pluginhooker.hook.impl.bukkit;
 import cn.nukkit.Server;
 import cn.nukkit.event.Event;
 import cn.nukkit.plugin.Plugin;
+import cn.nukkit.plugin.RegisteredListener;
 import dev.diona.pluginhooker.config.ConfigPath;
 import dev.diona.pluginhooker.hook.Injector;
 import dev.diona.pluginhooker.utils.ClassUtils;
@@ -12,7 +13,6 @@ import javassist.CtMethod;
 import javassist.NotFoundException;
 import javassist.util.proxy.DefineClassHelper;
 import lombok.Getter;
-
 import java.util.function.BiPredicate;
 
 public class BukkitEventInjector extends Injector {
@@ -38,7 +38,7 @@ public class BukkitEventInjector extends Injector {
     private final BukkitCallbackHandler callbackHandler = new BukkitCallbackHandler();
 
     public BukkitEventInjector() {
-        super("cn.nukkit.plugin.RegisteredListener", "cn.nukkit.plugin.Plugin");
+        super(RegisteredListener.class.getPackage().getName() + ".RegisteredListener", Plugin.class.getPackage().getName() + ".Plugin");
 
         try {
             Class<?> bukkitEventHooker =
@@ -62,7 +62,7 @@ public class BukkitEventInjector extends Injector {
         CtMethod callEvent = ClassUtils.getMethodByName(targetClass.getMethods(), "callEvent");
         assert callEvent != null;
         callEvent.insertBefore(
-                "if(" + CALLBACK_CLASS.getName() + ".getInstance().onCallEvent(this.plugin,$1))return;"
+                "if(" + CALLBACK_CLASS.getName() + ".getInstance().onCallEvent(this.getPlugin(),$1))return;"
         );
     }
 
