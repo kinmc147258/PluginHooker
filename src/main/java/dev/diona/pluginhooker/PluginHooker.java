@@ -20,7 +20,6 @@ public final class PluginHooker extends PluginBase {
 
     @Getter
     private static PluginHooker instance;
-
     @Getter
     private static HookerManager hookerManager;
     @Getter
@@ -30,19 +29,18 @@ public final class PluginHooker extends PluginBase {
     @Getter
     private static ConfigManager configManager;
 
-    public PluginHooker() {
+    @Override
+    public void onLoad() {
         instance = this;
+    }
 
+    @Override
+    public void onEnable() {
         configManager = new ConfigManager();
         pluginManager = new PluginManager();
         playerManager = new PlayerManager();
         this.getLogger().info("PluginHooker loaded! start hooking...");
         hookerManager = new HookerManager();
-        configManager.loadConfig(this);
-    }
-
-    @Override
-    public void onEnable() {
         this.getServer().getCommandMap().register("PluginHooker", new SimpleCommand());
         this.getServer().getPluginManager().registerEvents(new PlayerListener(), this);
     }
