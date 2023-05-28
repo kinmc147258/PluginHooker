@@ -56,6 +56,7 @@ public class NMSUtils {
             return (ChannelPipeline) pipelineMethod.invoke(channel);
         } catch (Throwable ignore) {
             //throw new RuntimeException(e);
+            return null;
         }
     }
 
