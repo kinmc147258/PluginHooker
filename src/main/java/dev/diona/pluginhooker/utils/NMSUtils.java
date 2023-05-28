@@ -24,7 +24,7 @@ public class NMSUtils {
     static {
         try {
             int majorVersion = getNMSMajorVersion();
-            Method getHandle = Class.forName(BUKKIT_PACKAGE + ".entity.CraftPlayer")
+            Method getHandle = Class.forName(Player.class.getPackage().getName())
                     .getMethod("getHandle");
             getHandleMethod = MethodHandles.lookup().unreflect(getHandle);
 
