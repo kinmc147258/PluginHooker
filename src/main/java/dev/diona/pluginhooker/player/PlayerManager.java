@@ -30,7 +30,4 @@ public class PlayerManager {
         return null;
     }
 
-    public void removeAllPlayerCachedListener() {
-        Collections.unmodifiableSet(players).forEach(DionaPlayer::removeCachedListener);
-    }
 }

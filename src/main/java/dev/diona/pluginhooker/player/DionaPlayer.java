@@ -3,10 +3,8 @@ package dev.diona.pluginhooker.player;
 import cn.nukkit.Player;
 import cn.nukkit.Server;
 import cn.nukkit.plugin.Plugin;
-import com.comphenix.protocol.injector.SortedPacketListenerList;
 import dev.diona.pluginhooker.PluginHooker;
 import lombok.Getter;
-import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.Objects;
@@ -20,13 +18,7 @@ public class DionaPlayer {
 
     private final Set<Plugin> enabledPlugins = new HashSet<>();
 
-    // cached ProtocolLib listener list
-    @Setter
-    private SortedPacketListenerList receivedCachedListeners;
-
-    @Setter
-    private SortedPacketListenerList sendingCachedListeners;
-
+    // 有关ProtocolLib的部分删除了
     private final AtomicBoolean initialized = new AtomicBoolean(false);
 
     public DionaPlayer(Player player) {
@@ -39,23 +31,15 @@ public class DionaPlayer {
             return;
         }
         enabledPlugins.add(plugin);
-        removeCachedListener();
     }
 
     public void disablePlugin(Plugin plugin) {
         enabledPlugins.remove(plugin);
-        removeCachedListener();
     }
 
     public boolean isPluginEnabled(Plugin plugin) {
         return enabledPlugins.contains(plugin);
     }
-
-    public synchronized void removeCachedListener() {
-        sendingCachedListeners = null;
-        receivedCachedListeners = null;
-    }
-
     public boolean isInitialized() {
         return initialized.get();
     }

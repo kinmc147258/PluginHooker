@@ -1,8 +1,6 @@
 package dev.diona.pluginhooker.utils;
 
-import com.comphenix.protocol.ProtocolLibrary;
 import io.netty.util.Version;
-
 import java.util.Map;
 
 public class NettyVersion {
