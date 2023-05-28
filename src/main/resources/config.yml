@@ -10,6 +10,6 @@ hook:
 
   netty:
     # Should we hook the netty pipeline?
-    enabled: true
+    enabled: false
     # Should we call the NettyCodecEvent?
     call-event: false
