@@ -2,21 +2,17 @@ package dev.diona.pluginhooker.config;
 
 import cn.nukkit.utils.Config;
 import dev.diona.pluginhooker.PluginHooker;
-
-import java.io.File;
 import java.lang.reflect.Field;
 
 public class ConfigManager {
 
-    private Config config = new Config(PluginHooker.getInstance().getDataFolder() + "/config.yml", 2);
+    private final Config config = new Config(PluginHooker.getInstance().getDataFolder() + "/config.yml", 2);
 
     public ConfigManager() {
         try {
-            File configFile = new File(PluginHooker.getInstance().getDataFolder(), "config.yml");
-            if (!configFile.exists()) {
-                PluginHooker.getInstance().saveResource("config.yml", false);
+            if (!config.exists("hook")){
+                PluginHooker.getInstance().saveResource("config.yml",true);
             }
-            config = new Config(configFile);
             config.save(true);
         } catch (Exception e) {
             e.printStackTrace();

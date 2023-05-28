@@ -1,5 +1,3 @@
-# Enable bstats
-bstats: true
 # Hook options
 hook:
   bukkit:
@@ -9,12 +7,6 @@ hook:
     call-event: true
     # Should we use reflection to get player in unknown events?
     use-reflection-to-get-event-player: true
-
-  protocollib:
-    # Should we hook the ProtocolLib packet listener?
-    enabled: true
-    # Should we call the ProtocolLibPacketEvent?
-    call-event: true
 
   netty:
     # Should we hook the netty pipeline?
