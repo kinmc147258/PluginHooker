@@ -36,7 +36,7 @@ Then add the following dependency
 ```xml
 <dependencies>
     <dependency>
-        <groupId>com.github.DionaMC</groupId>
+        <groupId>com.github.Catrainbow233</groupId>
         <artifactId>PluginHooker</artifactId>
         <version>1.2</version>
     </dependency>
@@ -84,11 +84,7 @@ public class ExampleListener implements Listener {
     public void onBukkitEvent(BukkitListenerEvent event) {
         // do something
     }
-
-    @EventHandler
-    public void onProtocolLibEvent(ProtocolLibPacketEvent event) {
-        // do something
-    }
+    
 }
 ```
 
