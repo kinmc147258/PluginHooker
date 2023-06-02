@@ -1,8 +1,7 @@
 # PluginHooker
 
 PluginHooker 是一个 Nukkit 插件，它能够为开发者提供一种便捷的方式来控制玩家的各种监听器。
-[Discord](https://discord.gg/fdmkfts)
-[QQ群](https://jq.qq.com/?_wv=1027&k=dhEQrZZW)
+[Discord](https://discord.gg/bCQ8pEgk4t)
 
 [English](README.md)
 
