@@ -1,8 +1,7 @@
 # PluginHooker
 
 PluginHooker is a Nukkit plugin that aims to provide an ultimately simple and better method to hook Nukkit events and ProtocolLib PacketEvents  
-[Discord](https://discord.gg/fdmkfts)
-[QQ群](https://jq.qq.com/?_wv=1027&k=dhEQrZZW)
+[Discord](https://discord.gg/bCQ8pEgk4t)
 
 ## Localization
 
