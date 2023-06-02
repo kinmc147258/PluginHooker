@@ -30,7 +30,7 @@ PluginHooker 是一个 Nukkit 插件，它能够为开发者提供一种便捷�
 
 <dependencies>
     <dependency>
-        <groupId>com.github.DionaMC</groupId>
+        <groupId>com.github.Catrainbow233</groupId>
         <artifactId>PluginHooker</artifactId>
         <version>1.2</version>
     </dependency>
@@ -77,11 +77,7 @@ public class ExampleListener implements Listener {
     public void onBukkitEvent(BukkitListenerEvent event) {
         // do something
     }
-
-    @EventHandler
-    public void onProtocolLibEvent(ProtocolLibPacketEvent event) {
-        // do something
-    }
+    
 }
 ```
 
