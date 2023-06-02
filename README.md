@@ -81,7 +81,7 @@ To intercept or perform a custom action when an event is executed, add an event 
 public class ExampleListener implements Listener {
 
     @EventHandler
-    public void onBukkitEvent(BukkitListenerEvent event) {
+    public void onNukkitEvent(NukkitListenerEvent event) {
         // do something
     }
     

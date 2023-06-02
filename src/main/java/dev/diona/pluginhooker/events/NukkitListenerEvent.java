@@ -7,7 +7,7 @@ import cn.nukkit.plugin.Plugin;
 import dev.diona.pluginhooker.player.DionaPlayer;
 import lombok.Getter;
 
-public class BukkitListenerEvent extends Event implements Cancellable {
+public class NukkitListenerEvent extends Event implements Cancellable {
 
     private static final HandlerList handlers = new HandlerList();
 
@@ -20,11 +20,11 @@ public class BukkitListenerEvent extends Event implements Cancellable {
     @Getter
     private final DionaPlayer dionaPlayer;
 
-    public BukkitListenerEvent(Plugin plugin, Event event) {
+    public NukkitListenerEvent(Plugin plugin, Event event) {
         this(plugin, event, null);
     }
 
-    public BukkitListenerEvent(Plugin plugin, Event event, DionaPlayer dionaPlayer) {
+    public NukkitListenerEvent(Plugin plugin, Event event, DionaPlayer dionaPlayer) {
         super();
         this.plugin = plugin;
         this.event = event;

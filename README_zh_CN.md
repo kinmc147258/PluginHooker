@@ -74,7 +74,7 @@ public void disablePluginForPlayer(Player player) {
 public class ExampleListener implements Listener {
 
     @EventHandler
-    public void onBukkitEvent(BukkitListenerEvent event) {
+    public void onNukkitEvent(NukkitListenerEvent event) {
         // do something
     }
     

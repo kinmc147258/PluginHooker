@@ -22,7 +22,7 @@ import cn.nukkit.event.vehicle.VehicleDestroyEvent;
 import cn.nukkit.plugin.Plugin;
 import dev.diona.pluginhooker.PluginHooker;
 import dev.diona.pluginhooker.config.ConfigPath;
-import dev.diona.pluginhooker.events.BukkitListenerEvent;
+import dev.diona.pluginhooker.events.NukkitListenerEvent;
 import dev.diona.pluginhooker.player.DionaPlayer;
 
 import java.lang.reflect.Field;
@@ -64,7 +64,7 @@ public class BukkitCallbackHandler {
             if (!callEvent) {
                 return false;
             }
-            BukkitListenerEvent bukkitListenerEvent = new BukkitListenerEvent(plugin, event);
+            NukkitListenerEvent bukkitListenerEvent = new NukkitListenerEvent(plugin, event);
             Server.getInstance().getPluginManager().callEvent(bukkitListenerEvent);
             return bukkitListenerEvent.isCancelled();
         } else {
@@ -72,7 +72,7 @@ public class BukkitCallbackHandler {
                 if (!callEvent) {
                     return false;
                 }
-                BukkitListenerEvent bukkitListenerEvent = new BukkitListenerEvent(plugin, event, dionaPlayer);
+                NukkitListenerEvent bukkitListenerEvent = new NukkitListenerEvent(plugin, event, dionaPlayer);
                 Server.getInstance().getPluginManager().callEvent(bukkitListenerEvent);
                 return bukkitListenerEvent.isCancelled();
             } else {
