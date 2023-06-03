@@ -29,9 +29,9 @@ PluginHooker 是一个 Nukkit 插件，它能够为开发者提供一种便捷�
 
 <dependencies>
     <dependency>
-        <groupId>com.github.Catrainbow233</groupId>
-        <artifactId>PluginHooker</artifactId>
-        <version>1.2</version>
+      <groupId>com.github.Catrainbow233</groupId>
+      <artifactId>PluginHooker</artifactId>
+      <version>1.0.1</version>
     </dependency>
 </dependencies>
 ```

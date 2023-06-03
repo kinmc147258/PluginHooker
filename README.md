@@ -37,7 +37,7 @@ Then add the following dependency
     <dependency>
         <groupId>com.github.Catrainbow233</groupId>
         <artifactId>PluginHooker</artifactId>
-        <version>1.2</version>
+        <version>1.0.1</version>
     </dependency>
 </dependencies>
 ```
